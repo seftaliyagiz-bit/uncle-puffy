@@ -739,7 +739,7 @@
     box-shadow: 0 8px 36px var(--shadow-md);
     height: 400px;
   }
-  .map-wrap iframe {
+  .map-wrap iframe { height: 350px; border-radius: 12px; /* updated */
     width: 100%;
     height: 100%;
     border: none;
@@ -878,6 +878,12 @@
     .menu-grid { grid-template-columns: 1fr; }
     .options-row { gap: 8px; }
   }
+
+  /* ── Language Toggle ── */
+  .lang-toggle { display:flex;align-items:center;gap:0;border:1.5px solid var(--pink);border-radius:6px;overflow:hidden; }
+  .lang-btn { background:transparent;border:none;padding:5px 11px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:0.8px;color:var(--text-mid);transition:background 0.2s,color 0.2s;font-family:var(--font-sans); }
+  .lang-btn.active { background:var(--pink);color:white; }
+  .lang-btn:hover:not(.active) { background:var(--pink-light); }
 </style>
 </head>
 <body>
@@ -887,11 +893,12 @@
   <a href="#hero" class="nav-logo">Uncle Puffy 🍰</a>
   <ul class="nav-links">
     <li><a href="#menu">Menu</a></li>
-    <li><a href="#over-ons">Over ons</a></li>
+    <li><a href="#over-ons" data-lang="nav_about">Over ons</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-right">
-    <a href="#contact" class="btn btn-pink" style="padding:10px 22px;font-size:12px">Bestellen</a>
+    <a href="#contact" class="btn btn-pink" style="padding:10px 22px;font-size:12px" data-lang="nav_order">Bestellen</a>
+    <div class="lang-toggle" id="langToggle" style="margin-right:8px"><button class="lang-btn active" data-lang="nl">NL</button><button class="lang-btn" data-lang="en">EN</button></div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -901,9 +908,9 @@
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu">
   <a href="#menu" class="mobile-link">Menu</a>
-  <a href="#over-ons" class="mobile-link">Over ons</a>
+  <a href="#over-ons" class="mobile-link" data-lang="nav_about">Over ons</a>
   <a href="#contact" class="mobile-link">Contact</a>
-  <a href="#contact" class="btn btn-pink mobile-link">Bestellen</a>
+  <a href="#contact" class="btn btn-pink mobile-link" data-lang="nav_order">Bestellen</a>
 </div>
 
 <!-- HERO -->
@@ -927,9 +934,9 @@
       <span class="star">⭐</span> Leuven's Favourite Dessert Spot
     </div>
     <h1 class="hero-h1">Home of<br><em>Japanese Cheesecake</em></h1>
-    <p class="hero-sub">Tiensestraat 5 &nbsp;·&nbsp; Leuven &nbsp;·&nbsp; Elke dag open</p>
+    <p class="hero-sub" data-lang="hero_sub">Tiensestraat 5 &nbsp;·&nbsp; Leuven &nbsp;·&nbsp; Elke dag open</p>
     <div class="hero-btns">
-      <a href="#menu" class="btn btn-pink">Ontdek ons menu</a>
+      <a href="#menu" class="btn btn-pink" data-lang="hero_btn1">Ontdek ons menu</a>
       <a href="#contact" class="btn btn-outline">Takeaway <i class="fa-solid fa-arrow-right" style="font-size:11px"></i></a>
     </div>
   </div>
@@ -943,8 +950,8 @@
 <!-- SIGNATURE PRODUCTS -->
 <section id="menu">
   <div class="products-header fade-up">
-    <div class="section-tag">Onze specialiteiten</div>
-    <h2 class="section-title">Vers gemaakt,<br><em>elke dag</em></h2>
+    <div class="section-tag" data-lang="sec_tag1">Onze specialiteiten</div>
+    <h2 class="section-title" data-lang="sec_title1">Vers gemaakt,<br><em>elke dag</em></h2>
     <p style="font-size:14.5px;color:var(--text-soft);margin-top:8px">Alles wordt dagelijks bereid met de beste ingrediënten</p>
   </div>
 
@@ -996,8 +1003,8 @@
       </div>
     </div>
     <div class="about-body fade-up d2">
-      <div class="section-tag">Ons verhaal</div>
-      <h2 class="section-title">Twee broers,<br><em>één droom</em></h2>
+      <div class="section-tag" data-lang="about_tag">Ons verhaal</div>
+      <h2 class="section-title" data-lang="about_title">Twee broers,<br><em>één droom</em></h2>
       <blockquote class="about-quote">
         "Uncle Puffy werd geboren uit een passie voor Japanse patisserie."
       </blockquote>
@@ -1025,7 +1032,7 @@
 <section id="menu-highlights">
   <div class="menu-header fade-up">
     <div class="section-tag">Dranken & meer</div>
-    <h2 class="section-title">Iets te <em>drinken?</em></h2>
+    <h2 class="section-title" data-lang="sec_title2">Iets te <em>drinken?</em></h2>
     <p style="font-size:14.5px;color:var(--text-mid);margin-top:8px">Perfecte begeleiders bij elke zoete verwennerij</p>
   </div>
   <div class="menu-grid" id="menu-grid">
@@ -1039,8 +1046,8 @@
 <!-- REVIEWS -->
 <section id="reviews">
   <div class="reviews-header fade-up">
-    <div class="section-tag">Reviews</div>
-    <h2 class="section-title">Wat onze klanten <em>zeggen</em></h2>
+    <div class="section-tag" data-lang="sec_tag3">Reviews</div>
+    <h2 class="section-title" data-lang="sec_title3">Wat onze klanten <em>zeggen</em></h2>
   </div>
   <div class="reviews-grid">
     <div class="review-card fade-up d1">
@@ -1104,9 +1111,8 @@
     <div class="fade-up">
       <div class="map-wrap">
         <iframe
-          src="https://www.openstreetmap.org/export/embed.html?bbox=4.6990%2C50.8770%2C4.7050%2C50.8810&layer=mapnik&marker=50.8790%2C4.7020"
-          allowfullscreen
-          loading="lazy"
+          src="https://www.google.com/maps?q=Tiensestraat+5,+3000+Leuven&output=embed"
+          width="100%" height="350" style="border:0;border-radius:12px;" allowfullscreen loading="lazy"
           title="Uncle Puffy locatie"
         ></iframe>
       </div>
@@ -1132,11 +1138,11 @@
       <div class="contact-item">
         <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
         <div>
-          <div class="contact-key">Openingsuren</div>
+          <div class="contact-key" data-lang="con_key">Openingsuren</div>
           <div class="contact-val">
             <span style="display:flex;align-items:center;gap:8px">
               <span style="width:8px;height:8px;border-radius:50%;background:#4caf75;display:inline-block;animation:pulse 2s infinite"></span>
-              Elke dag: 10:00 – 21:00
+              <span data-lang="con_hours">Elke dag: 11:00 – 21:00</span>
             </span>
           </div>
         </div>
@@ -1246,6 +1252,47 @@ menuItems.forEach((item, i) => {
   grid.appendChild(el);
   observer.observe(el);
 });
+</script>
+
+<script>
+const UPLANG = {
+  nl: {
+    nav_about:'Over ons', nav_order:'Bestellen',
+    hero_sub:'Tiensestraat 5 &nbsp;&middot;&nbsp; Leuven &nbsp;&middot;&nbsp; Elke dag open',
+    hero_btn1:'Ontdek ons menu',
+    sec_tag1:'Onze specialiteiten', sec_title1:'Vers gemaakt,<br><em>elke dag</em>',
+    about_tag:'Ons verhaal', about_title:'Twee broers,<br><em>één droom</em>',
+    sec_tag2:'Dranken &amp; meer', sec_title2:'Iets te <em>drinken?</em>',
+    sec_tag3:'Reviews', sec_title3:'Wat onze klanten <em>zeggen</em>',
+    con_key:'Openingsuren', con_hours:'Elke dag: 11:00 – 21:00'
+  },
+  en: {
+    nav_about:'About', nav_order:'Order',
+    hero_sub:'Tiensestraat 5 &nbsp;&middot;&nbsp; Leuven &nbsp;&middot;&nbsp; Open every day',
+    hero_btn1:'Discover our menu',
+    sec_tag1:'Our specialities', sec_title1:'Made fresh,<br><em>every day</em>',
+    about_tag:'Our story', about_title:'Two brothers,<br><em>one dream</em>',
+    sec_tag2:'Drinks &amp; more', sec_title2:'Something to <em>drink?</em>',
+    sec_tag3:'Reviews', sec_title3:'What our customers <em>say</em>',
+    con_key:'Opening hours', con_hours:'Every day: 11:00 – 21:00'
+  }
+};
+let upLang = localStorage.getItem('up-lang') || 'nl';
+function upSetLang(l) {
+  upLang = l;
+  const d = UPLANG[l];
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    if (d[el.dataset.lang] !== undefined) el.innerHTML = d[el.dataset.lang];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  document.documentElement.lang = l;
+  localStorage.setItem('up-lang', l);
+}
+document.getElementById('langToggle').addEventListener('click', e => {
+  const b = e.target.closest('.lang-btn');
+  if (b) upSetLang(b.dataset.lang);
+});
+upSetLang(upLang);
 </script>
 </body>
 </html>
