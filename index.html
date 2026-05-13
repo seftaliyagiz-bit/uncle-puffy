@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uncle Puffy — Japanese Cheesecake · Leuven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --cream:   #fdf8f3;
+    --white:   #ffffff;
+    --pink:    #f4a7b9;
+    --pink-light: #fde8ed;
+    --pink-mid: #f9cdd6;
+    --green:   #a8c5a0;
+    --green-light: #deeeda;
+    --lilac:   #c9b8e8;
+    --lilac-light: #ede8f8;
+    --text:    #2a2a2a;
+    --text-mid: #5a5a5a;
+    --text-soft: #9a9a9a;
+    --shadow:  rgba(0,0,0,0.08);
+    --shadow-md: rgba(0,0,0,0.12);
+    --radius:  16px;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans:  'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── UTILITIES ──────────────────────────────────────── */
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 14px;
+  }
+  .section-tag::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1.5px;
+    background: var(--pink);
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--pink);
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up.d1 { transition-delay: 0.1s; }
+  .fade-up.d2 { transition-delay: 0.2s; }
+  .fade-up.d3 { transition-delay: 0.3s; }
+  .fade-up.d4 { transition-delay: 0.4s; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 30px;
+    border-radius: 50px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow-md); }
+  .btn-pink {
+    background: var(--pink);
+    color: var(--white);
+  }
+  .btn-pink:hover { background: #f094a8; }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1.5px solid rgba(42,42,42,0.25);
+  }
+  .btn-outline:hover { border-color: var(--pink); color: var(--pink); }
+  .btn-outline-pink {
+    background: transparent;
+    color: var(--pink);
+    border: 1.5px solid var(--pink);
+  }
+  .btn-outline-pink:hover { background: var(--pink); color: white; }
+
+  /* ── NAV ────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(253,248,243,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 0 5vw;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: box-shadow 0.3s ease;
+  }
+  nav.scrolled { box-shadow: 0 2px 20px var(--shadow); }
+
+  .nav-logo {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-mid);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--pink); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(253,248,243,0.98);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--pink); }
+  .mobile-menu .btn { font-style: normal; font-family: var(--font-sans); font-size: 15px; }
+
+  /* ── HERO ────────────────────────────────────────────── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 640px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(145deg, #fdf0f5 0%, #fdf8f3 40%, #f5f0fd 100%);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.07;
+    filter: saturate(0.5);
+  }
+
+  /* Cherry blossom petals */
+  .petal {
+    position: absolute;
+    top: -60px;
+    width: 14px;
+    height: 14px;
+    border-radius: 60% 40% 60% 40% / 50% 50% 50% 50%;
+    opacity: 0;
+    animation: petalFall linear infinite;
+  }
+  .petal::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: inherit;
+    transform: rotate(45deg) scale(0.7);
+    opacity: 0.6;
+  }
+  .p1  { left:  7%; width: 12px; height: 10px; background: #f9c8d4; animation-duration: 9s;  animation-delay: 0s;    }
+  .p2  { left: 18%; width: 10px; height: 9px;  background: #f4b8c8; animation-duration: 11s; animation-delay: 2.5s;  }
+  .p3  { left: 32%; width: 14px; height: 12px; background: #fbd0db; animation-duration: 8s;  animation-delay: 1.2s;  }
+  .p4  { left: 47%; width: 11px; height: 10px; background: #f9c0cf; animation-duration: 12s; animation-delay: 4s;    }
+  .p5  { left: 58%; width: 13px; height: 11px; background: #f4b8c8; animation-duration: 10s; animation-delay: 0.8s;  }
+  .p6  { left: 70%; width: 10px; height: 9px;  background: #fbd0db; animation-duration: 9.5s;animation-delay: 3.2s;  }
+  .p7  { left: 82%; width: 14px; height: 12px; background: #f9c8d4; animation-duration: 11s; animation-delay: 1.8s;  }
+  .p8  { left: 93%; width: 11px; height: 10px; background: #f4b8c8; animation-duration: 8.5s;animation-delay: 5s;    }
+  .p9  { left: 25%; width: 10px; height: 9px;  background: #fbd0db; animation-duration: 13s; animation-delay: 6s;    }
+  .p10 { left: 63%; width: 12px; height: 10px; background: #f9c0cf; animation-duration: 10s; animation-delay: 7s;    }
+
+  @keyframes petalFall {
+    0%   { transform: translateY(0) rotate(0deg)   translateX(0);   opacity: 0; }
+    5%   { opacity: 0.85; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(110vh) rotate(540deg) translateX(40px); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 24px;
+    max-width: 780px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    background: var(--white);
+    border-radius: 50px;
+    box-shadow: 0 4px 16px var(--shadow);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-mid);
+    margin-bottom: 32px;
+    letter-spacing: 0.04em;
+  }
+  .hero-badge .star { color: #f5c842; }
+
+  .hero-h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(42px, 8vw, 88px);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .hero-h1 em {
+    font-style: italic;
+    color: var(--pink);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--text-soft);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 40px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.4;
+    animation: scrollBounce 2s ease infinite;
+  }
+  .hero-scroll span {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+  }
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── PRODUCTS ────────────────────────────────────────── */
+  #menu {
+    background: var(--white);
+    padding: 110px 5vw;
+  }
+
+  .products-header {
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto 64px;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    box-shadow: 0 4px 28px var(--shadow);
+    border: 1.5px solid rgba(244,167,185,0.15);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .product-card:nth-child(1)::before { background: linear-gradient(90deg, var(--pink), #f9cdd6); }
+  .product-card:nth-child(2)::before { background: linear-gradient(90deg, var(--lilac), #ddd0f5); }
+  .product-card:nth-child(3)::before { background: linear-gradient(90deg, var(--green), #c5e0c0); }
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px var(--shadow-md);
+  }
+
+  .product-emoji {
+    font-size: 44px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .product-name {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .product-desc {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.65;
+    margin-bottom: 16px;
+    font-style: italic;
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 300;
+  }
+
+  .product-flavors {
+    font-size: 12.5px;
+    color: var(--text-soft);
+    margin-bottom: 24px;
+    line-height: 1.6;
+    flex: 1;
+  }
+  .product-flavors strong {
+    color: var(--text-mid);
+    font-weight: 500;
+  }
+
+  .product-price {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--pink);
+    background: var(--pink-light);
+    padding: 7px 16px;
+    border-radius: 50px;
+    align-self: flex-start;
+  }
+
+  /* ── ABOUT ───────────────────────────────────────────── */
+  #over-ons {
+    background: var(--cream);
+    padding: 110px 5vw;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: 24px;
+    display: block;
+    box-shadow: 0 20px 60px var(--shadow-md);
+  }
+  .about-img-badge {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    box-shadow: 0 8px 32px var(--shadow-md);
+    text-align: center;
+  }
+  .about-img-badge .num {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--pink);
+    line-height: 1;
+  }
+  .about-img-badge .lbl {
+    font-size: 11px;
+    color: var(--text-soft);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .about-body p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.85;
+    margin-bottom: 16px;
+  }
+  .about-quote {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 3vw, 32px);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.4;
+    margin: 28px 0;
+    padding-left: 24px;
+    border-left: 3px solid var(--pink);
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+    padding: 20px 24px;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 20px var(--shadow);
+    flex: 1;
+    min-width: 110px;
+  }
+  .stat-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-mid);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+
+  /* ── MENU HIGHLIGHTS ─────────────────────────────────── */
+  #menu-highlights {
+    background: linear-gradient(135deg, var(--pink-light) 0%, var(--lilac-light) 100%);
+    padding: 110px 5vw;
+  }
+
+  .menu-header {
+    text-align: center;
+    max-width: 540px;
+    margin: 0 auto 60px;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1080px;
+    margin: 0 auto 48px;
+  }
+
+  .menu-item {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius);
+    padding: 24px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 4px 16px rgba(244,167,185,0.15);
+    border: 1px solid rgba(255,255,255,0.8);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .menu-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 32px rgba(201,184,232,0.25);
+  }
+
+  .menu-item-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .menu-item-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .icon-pink   { background: var(--pink-light); }
+  .icon-lilac  { background: var(--lilac-light); }
+  .icon-green  { background: var(--green-light); }
+
+  .menu-item-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .menu-item-sub {
+    font-size: 11.5px;
+    color: var(--text-soft);
+  }
+  .menu-item-price {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--pink);
+    white-space: nowrap;
+  }
+
+  .menu-footer {
+    text-align: center;
+  }
+
+  /* ── REVIEWS ─────────────────────────────────────────── */
+  #reviews {
+    background: var(--white);
+    padding: 110px 5vw;
+  }
+
+  .reviews-header {
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto 60px;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1080px;
+    margin: 0 auto 44px;
+  }
+
+  .review-card {
+    background: var(--cream);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    box-shadow: 0 4px 20px var(--shadow);
+    border: 1px solid rgba(244,167,185,0.12);
+    transition: transform 0.25s, box-shadow 0.25s;
+    display: flex;
+    flex-direction: column;
+  }
+  .review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px var(--shadow-md);
+  }
+
+  .stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 16px;
+  }
+  .stars i { color: #f5c842; font-size: 13px; }
+
+  .review-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+
+  .review-source {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .review-source-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
+  }
+  .dot-tripadvisor { background: #00af87; }
+  .dot-google { background: #4285f4; }
+
+  .review-meta {
+    font-size: 12px;
+    color: var(--text-soft);
+    line-height: 1.4;
+  }
+  .review-meta strong {
+    display: block;
+    color: var(--text-mid);
+    font-weight: 500;
+    font-size: 13px;
+  }
+
+  .reviews-footer {
+    text-align: center;
+  }
+
+  /* ── VISIT US ────────────────────────────────────────── */
+  #contact {
+    background: var(--cream);
+    padding: 110px 5vw;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    max-width: 1080px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .map-wrap {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 36px var(--shadow-md);
+    height: 400px;
+  }
+  .map-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .contact-info { padding-top: 8px; }
+
+  .contact-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .contact-item:first-of-type { border-top: 1px solid rgba(0,0,0,0.06); }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--pink-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pink);
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .contact-key {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .contact-val {
+    font-size: 14.5px;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+  .contact-val a {
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-val a:hover { color: var(--pink); }
+
+  .options-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .option-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    background: var(--white);
+    border-radius: 50px;
+    border: 1px solid rgba(244,167,185,0.3);
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--text-mid);
+    box-shadow: 0 2px 10px var(--shadow);
+  }
+  .option-chip i { color: var(--pink); font-size: 13px; }
+
+  /* ── FOOTER ──────────────────────────────────────────── */
+  footer {
+    background: var(--cream);
+    border-top: 1px solid rgba(244,167,185,0.2);
+    padding: 36px 5vw;
+  }
+  .footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: var(--text-soft);
+    text-align: center;
+  }
+  .footer-ig a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-ig a:hover { color: var(--pink); }
+  .footer-ig i { font-size: 16px; color: var(--pink); }
+
+  /* ── RESPONSIVE ──────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .nav-links, .nav-right .btn { display: none; }
+    .hamburger { display: flex; }
+
+    .products-grid,
+    .menu-grid,
+    .reviews-grid { grid-template-columns: 1fr; }
+
+    .about-grid,
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+
+    .about-img-badge { bottom: -12px; right: -12px; }
+
+    #menu, #over-ons, #menu-highlights, #reviews, #contact { padding: 80px 5vw; }
+
+    .stats-row { gap: 16px; }
+
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-btns { flex-direction: column; align-items: center; }
+    .hero-h1 { font-size: 38px; }
+    .products-grid { gap: 20px; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .options-row { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Uncle Puffy 🍰</a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#over-ons">Over ons</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#contact" class="btn btn-pink" style="padding:10px 22px;font-size:12px">Bestellen</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#menu" class="mobile-link">Menu</a>
+  <a href="#over-ons" class="mobile-link">Over ons</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="#contact" class="btn btn-pink mobile-link">Bestellen</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Cherry blossom petals -->
+  <div class="petal p1"></div>
+  <div class="petal p2"></div>
+  <div class="petal p3"></div>
+  <div class="petal p4"></div>
+  <div class="petal p5"></div>
+  <div class="petal p6"></div>
+  <div class="petal p7"></div>
+  <div class="petal p8"></div>
+  <div class="petal p9"></div>
+  <div class="petal p10"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="star">⭐</span> Leuven's Favourite Dessert Spot
+    </div>
+    <h1 class="hero-h1">Home of<br><em>Japanese Cheesecake</em></h1>
+    <p class="hero-sub">Tiensestraat 5 &nbsp;·&nbsp; Leuven &nbsp;·&nbsp; Elke dag open</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn btn-pink">Ontdek ons menu</a>
+      <a href="#contact" class="btn btn-outline">Takeaway <i class="fa-solid fa-arrow-right" style="font-size:11px"></i></a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <i class="fa-solid fa-chevron-down" style="font-size:12px;color:var(--text-mid)"></i>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- SIGNATURE PRODUCTS -->
+<section id="menu">
+  <div class="products-header fade-up">
+    <div class="section-tag">Onze specialiteiten</div>
+    <h2 class="section-title">Vers gemaakt,<br><em>elke dag</em></h2>
+    <p style="font-size:14.5px;color:var(--text-soft);margin-top:8px">Alles wordt dagelijks bereid met de beste ingrediënten</p>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card fade-up d1">
+      <span class="product-emoji">🍰</span>
+      <div class="product-name">Japanese Cheesecake</div>
+      <div class="product-desc">"Fluffy, luchtig, gemaakt met liefde"</div>
+      <div class="product-flavors">
+        <strong>Smaken:</strong><br>
+        Classic · Pistachio · Strawberry
+      </div>
+      <span class="product-price">Vanaf €6,50</span>
+    </div>
+    <div class="product-card fade-up d2">
+      <span class="product-emoji">🧇</span>
+      <div class="product-name">Taiyaki</div>
+      <div class="product-desc">"Knapperig van buiten, zacht van binnen"</div>
+      <div class="product-flavors">
+        <strong>Gevuld met:</strong><br>
+        Verse room · Nutella · Rode bonen
+      </div>
+      <span class="product-price">Vanaf €4,50</span>
+    </div>
+    <div class="product-card fade-up d3">
+      <span class="product-emoji">🍡</span>
+      <div class="product-name">Mochi</div>
+      <div class="product-desc">"Traditioneel Japans rijstgebak"</div>
+      <div class="product-flavors">
+        <strong>Smaken:</strong><br>
+        Matcha · Aardbei · Mango · Sesam
+      </div>
+      <span class="product-price">Vanaf €3,50</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="over-ons">
+  <div class="about-grid">
+    <div class="about-img-wrap fade-up">
+      <img class="about-img"
+           src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800"
+           alt="Japanese cheesecake"
+           loading="lazy">
+      <div class="about-img-badge">
+        <div class="num">🌸</div>
+        <div class="lbl">Elke dag vers</div>
+      </div>
+    </div>
+    <div class="about-body fade-up d2">
+      <div class="section-tag">Ons verhaal</div>
+      <h2 class="section-title">Twee broers,<br><em>één droom</em></h2>
+      <blockquote class="about-quote">
+        "Uncle Puffy werd geboren uit een passie voor Japanse patisserie."
+      </blockquote>
+      <p>Twee broers, één missie: de lichtste, luchtigste cheesecake naar Leuven brengen. In ons gezellige hoekje op de Tiensestraat verwelkomen we studenten, toeristen en families — allemaal verenigd door hun liefde voor Japanse patisserie.</p>
+      <p>Van kersenbloesems aan de gevel tot de klanken van Ghibli in de achtergrond — bij Uncle Puffy proef je de warmte van Tokio in het hart van Leuven.</p>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-icon">☀️</span>
+          <div class="stat-label">Elke dag<br>vers</div>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">👨‍👨‍👦</span>
+          <div class="stat-label">2 vriendelijke<br>broers</div>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">🏡</span>
+          <div class="stat-label">100%<br>huisgemaakt</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU HIGHLIGHTS -->
+<section id="menu-highlights">
+  <div class="menu-header fade-up">
+    <div class="section-tag">Dranken & meer</div>
+    <h2 class="section-title">Iets te <em>drinken?</em></h2>
+    <p style="font-size:14.5px;color:var(--text-mid);margin-top:8px">Perfecte begeleiders bij elke zoete verwennerij</p>
+  </div>
+  <div class="menu-grid" id="menu-grid">
+    <!-- filled by JS -->
+  </div>
+  <div class="menu-footer fade-up">
+    <a href="#contact" class="btn btn-outline-pink">Volledig menu bekijken <i class="fa-solid fa-arrow-right" style="font-size:11px"></i></a>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-header fade-up">
+    <div class="section-tag">Reviews</div>
+    <h2 class="section-title">Wat onze klanten <em>zeggen</em></h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card fade-up d1">
+      <div class="stars">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+      </div>
+      <p class="review-text">"Perfect Japanese cheesecake, very good coffee. Two super friendly brothers are the owners."</p>
+      <div class="review-source">
+        <div class="review-source-dot dot-tripadvisor">T</div>
+        <div class="review-meta">
+          <strong>TripAdvisor-bezoeker</strong>
+          Uncle Puffy, Leuven
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-up d2">
+      <div class="stars">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+      </div>
+      <p class="review-text">"Best dessert in Leuven to be honest!! The cheesecake is incredibly soft and fluffy."</p>
+      <div class="review-source">
+        <div class="review-source-dot dot-google">G</div>
+        <div class="review-meta">
+          <strong>Google-recensent</strong>
+          Uncle Puffy, Leuven
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-up d3">
+      <div class="stars">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+      </div>
+      <p class="review-text">"Amazing food and drinks! Everything was made fresh and with love. Will definitely come back."</p>
+      <div class="review-source">
+        <div class="review-source-dot dot-tripadvisor">T</div>
+        <div class="review-meta">
+          <strong>TripAdvisor-bezoeker</strong>
+          Uncle Puffy, Leuven
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-footer fade-up">
+    <a href="https://www.tripadvisor.com/Restaurant_Review-g188669-d25676987-Reviews-Uncle_Puffy-Leuven_Flemish_Brabant_Province.html"
+       target="_blank" rel="noopener"
+       class="btn btn-outline" style="font-size:13px">
+      <span style="color:#00af87;font-weight:600">T</span>&nbsp; Bekijk alle reviews op TripAdvisor
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="fade-up">
+      <div class="map-wrap">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=4.6990%2C50.8770%2C4.7050%2C50.8810&layer=mapnik&marker=50.8790%2C4.7020"
+          allowfullscreen
+          loading="lazy"
+          title="Uncle Puffy locatie"
+        ></iframe>
+      </div>
+    </div>
+    <div class="contact-info fade-up d2">
+      <div class="section-tag">Bezoek ons</div>
+      <h2 class="section-title" style="margin-bottom:28px">Kom langs <em>vandaag</em></h2>
+
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div>
+          <div class="contact-key">Adres</div>
+          <div class="contact-val">Tiensestraat 5, 3000 Leuven</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+        <div>
+          <div class="contact-key">Telefoon</div>
+          <div class="contact-val"><a href="tel:+32465151607">+32 465 15 16 07</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+        <div>
+          <div class="contact-key">Openingsuren</div>
+          <div class="contact-val">
+            <span style="display:flex;align-items:center;gap:8px">
+              <span style="width:8px;height:8px;border-radius:50%;background:#4caf75;display:inline-block;animation:pulse 2s infinite"></span>
+              Elke dag: 10:00 – 21:00
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon" style="background:var(--lilac-light);color:var(--lilac)">
+          <i class="fa-brands fa-instagram"></i>
+        </div>
+        <div>
+          <div class="contact-key">Instagram</div>
+          <div class="contact-val">
+            <a href="https://instagram.com/uncle.puffy1" target="_blank" rel="noopener">@uncle.puffy1</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="options-row">
+        <span class="option-chip"><i class="fa-solid fa-utensils"></i> Dine-in</span>
+        <span class="option-chip"><i class="fa-solid fa-bag-shopping"></i> Takeaway</span>
+        <span class="option-chip"><i class="fa-solid fa-sun"></i> Buiten zitten</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#hero" class="footer-logo">Uncle Puffy 🍰</a>
+    <p class="footer-copy">© 2026 &nbsp;·&nbsp; Tiensestraat 5 &nbsp;·&nbsp; 3000 Leuven</p>
+    <div class="footer-ig">
+      <a href="https://instagram.com/uncle.puffy1" target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i> @uncle.puffy1
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(76,175,117,0.5); }
+    50%       { box-shadow: 0 0 0 5px rgba(76,175,117,0); }
+  }
+</style>
+
+<script>
+// ── Nav scroll ─────────────────────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+// ── Hamburger ──────────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+// ── IntersectionObserver fade-up ───────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ── Menu Highlights ────────────────────────────────────
+const menuItems = [
+  { icon: '☕', label: 'Koffie',         sub: 'Espresso · Lungo · Flat White', price: '€2,80', color: 'icon-pink'  },
+  { icon: '🍵', label: 'Matcha Latte',   sub: 'Warm of ijskoud',              price: '€4,20', color: 'icon-green' },
+  { icon: '🧊', label: 'Iced Coffee',    sub: 'Iced latte · Cold brew',       price: '€3,90', color: 'icon-lilac' },
+  { icon: '🧁', label: 'Mini Cupcakes',  sub: 'Dagelijks wisselend assortiment', price: '€2,50', color: 'icon-pink'  },
+  { icon: '🍓', label: 'Fruit Smoothie', sub: 'Aardbei · Mango · Mixed',      price: '€4,50', color: 'icon-green' },
+  { icon: '🫖', label: 'Japanse Thee',   sub: 'Hojicha · Sencha · Genmaicha', price: '€3,20', color: 'icon-lilac' },
+];
+
+const grid = document.getElementById('menu-grid');
+menuItems.forEach((item, i) => {
+  const el = document.createElement('div');
+  el.className = 'menu-item fade-up';
+  el.style.transitionDelay = (i * 0.07) + 's';
+  el.innerHTML = `
+    <div class="menu-item-left">
+      <div class="menu-item-icon ${item.color}">${item.icon}</div>
+      <div>
+        <div class="menu-item-name">${item.label}</div>
+        <div class="menu-item-sub">${item.sub}</div>
+      </div>
+    </div>
+    <div class="menu-item-price">${item.price}</div>`;
+  grid.appendChild(el);
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
